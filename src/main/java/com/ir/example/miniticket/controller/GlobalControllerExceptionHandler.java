@@ -1,5 +1,6 @@
 package com.ir.example.miniticket.controller;
 
+import com.ir.example.miniticket.exceptions.InvalidTicketException;
 import com.ir.example.miniticket.exceptions.ResourceNotFoundException;
 import com.ir.example.miniticket.model.ImmutableErrorDetails;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,16 @@ public class GlobalControllerExceptionHandler {
             details(request.getDescription(false)).
             build();
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidTicketException.class)
+    public ResponseEntity<?> invalidTicketException(InvalidTicketException ex, WebRequest request) {
+        ImmutableErrorDetails errorDetails =  ImmutableErrorDetails.builder().
+            timestamp(LocalDateTime.now()).
+            message(ex.getMessage()).
+            details(request.getDescription(false)).
+            build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
 }

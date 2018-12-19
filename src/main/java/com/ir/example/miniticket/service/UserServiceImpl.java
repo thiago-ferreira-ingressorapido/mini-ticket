@@ -38,7 +38,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public User updateUser(User oldUser, User newUser) {
-        User updatedUser = this.buildUser(newUser,oldUser.id());
+        User updatedUser = this.buildUser(newUser,oldUser.id().get());
         userDao.updateUser(updatedUser);
         return updatedUser;
 
@@ -46,7 +46,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public void deleteUser(User user) {
-        userDao.deleteUser(user.id());
+        userDao.deleteUser(user.id().get());
     }
 
     private User buildUser(User user, UUID id){

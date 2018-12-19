@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
-import javax.annotation.Nullable;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -17,24 +17,23 @@ import java.util.UUID;
 @JsonDeserialize(as = ImmutableUser.class)
 public interface User {
 
-    @Nullable
-    UUID id();
+    Optional<UUID> id();
 
-    String name();
+    Optional<String> name();
 
-    String cpf();
+    Optional<String> cpf();
 
-    String mobilePhone();
+    Optional<String> mobilePhone();
 
-    String email();
+    Optional<String> email();
 
-    String password();
+    Optional<String> password();
 
-    LocalDate birthdayDate();
+    Optional<LocalDate> birthdayDate();
 
-    Gender gender();
+    Optional<Gender> gender();
 
-    String address();
+    Optional<String> address();
 
 
 }

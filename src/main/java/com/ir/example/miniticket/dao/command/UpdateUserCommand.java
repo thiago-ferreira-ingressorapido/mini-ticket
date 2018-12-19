@@ -1,5 +1,6 @@
 package com.ir.example.miniticket.dao.command;
 
+import com.ir.example.miniticket.model.Gender;
 import com.ir.example.miniticket.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -30,8 +31,8 @@ public class UpdateUserCommand implements Consumer<User> {
         parameters.addValue("mobile_phone", user.mobilePhone());
         parameters.addValue("email", user.email());
         parameters.addValue("password", user.password());
-        parameters.addValue("birthday_date", Date.valueOf(user.birthdayDate()));
-        parameters.addValue("gender", user.gender().getId());
+        parameters.addValue("birthday_date", Date.valueOf(user.birthdayDate().orElse(null)));
+        parameters.addValue("gender", user.gender().orElse(Gender.UNDEFINED));
         parameters.addValue("address", user.address());
         jdbcTemplate.update(UPDATE, parameters);
     }

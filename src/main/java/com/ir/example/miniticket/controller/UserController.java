@@ -1,6 +1,8 @@
 package com.ir.example.miniticket.controller;
 
 import com.ir.example.miniticket.exceptions.ResourceNotFoundException;
+import com.ir.example.miniticket.model.ImmutableMessage;
+import com.ir.example.miniticket.model.Message;
 import com.ir.example.miniticket.model.User;
 import com.ir.example.miniticket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -47,14 +47,13 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") UUID userId)
+    public ResponseEntity<Message> deleteUser(@PathVariable(value = "id") UUID userId)
         throws ResourceNotFoundException {
         User user = userService.findUserById(userId)
             .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
         userService.deleteUser(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+        return ResponseEntity.ok().body(
+            ImmutableMessage.builder().success(true).message("User deleted successfully").build());
     }
 
     @PostMapping("/users")

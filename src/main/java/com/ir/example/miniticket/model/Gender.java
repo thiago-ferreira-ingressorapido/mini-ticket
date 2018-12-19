@@ -31,9 +31,8 @@ public enum Gender {
         if (id == null) {
             return null;
         }
-        int rawId = id;
         for (Gender gender : values()) {
-            if (gender.id == rawId) {
+            if (gender.id == id) {
                 return gender;
             }
         }
