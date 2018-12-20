@@ -5,6 +5,7 @@ import com.ir.example.miniticket.dao.command.FindEventDateByEventIdCommand;
 import com.ir.example.miniticket.dao.command.FindEventDateByIdCommand;
 import com.ir.example.miniticket.dao.command.InsertEventDateCommand;
 import com.ir.example.miniticket.dao.command.UpdateEventDateCommand;
+import com.ir.example.miniticket.dao.command.UpdateEventDateTicketsCommand;
 import com.ir.example.miniticket.model.EventDate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -42,5 +43,16 @@ public class EventDateDaoImpl implements EventDateDao {
     @Override
     public EventDate findEventDateById(UUID id) {
         return new FindEventDateByIdCommand(jdbcTemplate).apply(id);
+    }
+
+    /**
+     * Updates the quantity of the tickets available
+     *
+     * @param eventDateId
+     * @param quantity
+     */
+    @Override
+    public void updateEventDateAvailableTickets(UUID eventDateId, Integer quantity) {
+        new UpdateEventDateTicketsCommand(jdbcTemplate).accept(eventDateId,quantity);
     }
 }

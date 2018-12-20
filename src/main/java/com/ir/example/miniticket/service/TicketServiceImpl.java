@@ -31,7 +31,7 @@ public class TicketServiceImpl implements TicketService {
 
     TicketDao ticketDao;
 
-    public TicketServiceImpl(TicketDao ticketDao){
+    public TicketServiceImpl(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
     }
 
@@ -57,7 +57,7 @@ public class TicketServiceImpl implements TicketService {
         List<EventDate> eventDates = eventService.findEventDatesByEventId(event.id().get());
 
         //Validates the event
-        this.validateEvent(ticket,eventDates);
+        this.validateEvent(ticket, eventDates);
 
         //Validates the user
         User user = userService.findUserById(ticket.userId().get()).
@@ -72,8 +72,11 @@ public class TicketServiceImpl implements TicketService {
         this.ticketDao.createTicket(newTicket);
 
         //Updates the quantity of tickets available for the date.
-        EventDate currentEventDate =  eventDates.stream().filter( eDate -> eDate.id().equals(ticket.eventDateId())).findFirst().get();
-        eventService.updateEventDate(ImmutableEventDate.copyOf(currentEventDate).withAvailableTickets(currentEventDate.availableTickets().get() - ONE));
+        EventDate currentEventDate =
+            eventDates.stream().filter(eDate -> eDate.id().equals(ticket.eventDateId())).findFirst().get();
+
+        eventService.updateEventDateAvailableTickets(currentEventDate.id().get(),
+            currentEventDate.availableTickets().get() - ONE);
 
         return newTicket;
     }
@@ -89,26 +92,30 @@ public class TicketServiceImpl implements TicketService {
 
         //Add one ticket in the event date
         EventDate eventDate = eventService.findEventDateById(ticket.eventDateId().get());
-        eventService.updateEventDate(ImmutableEventDate.copyOf(eventDate).withAvailableTickets(eventDate.availableTickets().get() + ONE));
+
+        eventService.updateEventDateAvailableTickets(eventDate.id().get(),
+            eventDate.availableTickets().get() - ONE);
 
     }
 
     /**
      * Validates if the given ticket is correctly created
+     *
      * @param ticket
      * @throws InvalidTicketException
      */
     private void validateTicket(Ticket ticket) throws InvalidTicketException {
 
-        if(!ticket.eventId().isPresent()){
-           throw new InvalidTicketException("Is mandatory the Event ID");
+
+        if (!ticket.eventId().isPresent()) {
+            throw new InvalidTicketException("Is mandatory the Event ID");
         }
 
-        if(!ticket.eventDateId().isPresent()){
+        if (!ticket.eventDateId().isPresent()) {
             throw new InvalidTicketException("Is mandatory the EventDate ID");
         }
 
-        if(!ticket.userId().isPresent()){
+        if (!ticket.userId().isPresent()) {
             throw new InvalidTicketException("Is mandatory the User ID");
         }
     }
@@ -116,19 +123,22 @@ public class TicketServiceImpl implements TicketService {
     /**
      * Validates if the Event has EventDate available, and if them belongs each other.
      * Also validates if there are capacity available
+     *
      * @param ticket
      * @param eventDates
      * @throws InvalidTicketException
      */
     private void validateEvent(Ticket ticket, List<EventDate> eventDates) throws InvalidTicketException {
-        if(eventDates.isEmpty()){
+        if (eventDates.isEmpty()) {
             throw new InvalidTicketException("The given Event does not has EventDate available");
-        }else{
-           EventDate eventDate = eventDates.stream().filter( eDate -> eDate.id().equals(ticket.eventDateId())).findFirst().orElseThrow(() ->
-                new InvalidTicketException("The given EventDate does not belong to the given Event") );
-           if(eventDate.availableTickets().isPresent() && eventDate.availableTickets().get() == ZERO ){
-               throw new InvalidTicketException("The given Event does not has capacity available");
-           }
+        } else {
+            EventDate eventDate = eventDates.stream()
+                .filter(eDate -> eDate.id().equals(ticket.eventDateId()))
+                .findFirst()
+                .orElseThrow(() -> new InvalidTicketException("The given EventDate does not belong to the given Event"));
+            if (eventDate.availableTickets().isPresent() && eventDate.availableTickets().get() == ZERO) {
+                throw new InvalidTicketException("The given Event does not has capacity available");
+            }
         }
     }
 }

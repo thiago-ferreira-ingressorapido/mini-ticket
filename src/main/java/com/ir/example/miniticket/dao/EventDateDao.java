@@ -43,4 +43,11 @@ public interface EventDateDao {
      */
     public EventDate findEventDateById(UUID id);
 
+    /**
+     * Updates the quantity of the tickets available
+     * @param eventDateId
+     * @param quantity
+     */
+    public void updateEventDateAvailableTickets(UUID eventDateId,Integer quantity);
+
 }

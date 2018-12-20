@@ -7,12 +7,10 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
  * Row mapper of the <code>User</code> entity
- * @author thiago-ferreira
  */
 public class UserRowMapper implements RowMapper<User> {
 
@@ -26,6 +24,6 @@ public class UserRowMapper implements RowMapper<User> {
             .name(rs.getString("name"))
             .password(rs.getString("password"))
             .mobilePhone(rs.getString("mobile_phone"))
-            .gender(Gender.valueOf(rs.getInt("gender"))).build();
+            .gender(Gender.forValue(rs.getInt("gender"))).build();
     }
 }

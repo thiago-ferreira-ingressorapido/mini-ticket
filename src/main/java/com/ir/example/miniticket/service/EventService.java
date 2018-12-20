@@ -9,18 +9,19 @@ import java.util.UUID;
 
 /**
  * Interface with the services of the Event entity
- * @author thiago-ferreira
  */
 public interface EventService {
 
     /**
      * Finds all events
+     *
      * @return
      */
     List<Event> findAllEvents();
 
     /**
      * Finds a event by id
+     *
      * @param eventId
      * @return
      */
@@ -28,12 +29,14 @@ public interface EventService {
 
     /**
      * Delete an event
+     *
      * @param event
      */
     void deleteEvent(Event event);
 
     /**
      * Creates a new event
+     *
      * @param event
      * @return
      */
@@ -41,6 +44,7 @@ public interface EventService {
 
     /**
      * Updates an event
+     *
      * @param currentEvent Event with current data
      * @param eventDetails Event with the new data
      * @return
@@ -49,6 +53,7 @@ public interface EventService {
 
     /**
      * Finds all Event date of a given event
+     *
      * @param eventId
      * @return
      */
@@ -56,12 +61,21 @@ public interface EventService {
 
     /**
      * Updates an event date
+     *
      * @param eventDate
      */
     public void updateEventDate(EventDate eventDate);
 
     /**
+     * Updates the quantity of the tickets available
+     * @param eventDateId
+     * @param quantity
+     */
+    public void updateEventDateAvailableTickets(UUID eventDateId,Integer quantity);
+
+    /**
      * Finds an event date by id
+     *
      * @param id
      * @return
      */

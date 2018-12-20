@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * Represents an error occurred during a REST request.
- * @author thiago-ferreira
  */
 @Value.Immutable
 @JsonSerialize(as = ImmutableErrorDetails.class)

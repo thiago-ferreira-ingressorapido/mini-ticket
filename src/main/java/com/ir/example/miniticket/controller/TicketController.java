@@ -24,7 +24,6 @@ import java.util.UUID;
 
 /**
  * Controller of the Ticket entity.
- * @author thiago-ferreira
  */
 @RestController
 @RequestMapping("/api/v1")

@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 
 /**
  * Configures the database connection.
- * @author thiago-ferreira
  */
 @Component
 public class DatabaseConfiguration {

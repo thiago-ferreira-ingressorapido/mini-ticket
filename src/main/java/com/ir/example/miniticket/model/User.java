@@ -10,7 +10,6 @@ import java.util.UUID;
 
 /**
  * User entity
- * @author thiago-ferreira
  */
 @Value.Immutable
 @JsonSerialize(as = ImmutableUser.class)

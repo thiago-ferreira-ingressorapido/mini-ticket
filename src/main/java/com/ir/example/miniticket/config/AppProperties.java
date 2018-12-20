@@ -5,7 +5,6 @@ import com.netflix.config.Property;
 /**
  * Interface with the properties definitions.
  *
- * @author thiago-ferreira
  */
 public interface AppProperties {
 

@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * Class responsible to configure (instantiate) the dependencies injections.
- * @author thiago-ferreira
  */
 @Component
 public class ApplicationConfiguration {

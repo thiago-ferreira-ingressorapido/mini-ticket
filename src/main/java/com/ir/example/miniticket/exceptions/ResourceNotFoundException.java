@@ -3,7 +3,6 @@ package com.ir.example.miniticket.exceptions;
 
 /**
  * Exception thrown when a given resource (User,Event, etc) is not found.
- * @author thiago-ferreira
  */
 public class ResourceNotFoundException extends Exception {
 

@@ -28,7 +28,7 @@ public interface Event {
 
     Optional<Integer> quantityTickets();
 
-    Optional<List<EventDate>> eventDates();
+    List<EventDate> eventDates();
 
 
 }

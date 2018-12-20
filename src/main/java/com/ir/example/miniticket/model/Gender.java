@@ -3,7 +3,7 @@ package com.ir.example.miniticket.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Gender {
+public enum Gender implements EnumType {
 
     MALE(0),
     FEMALE(1),
@@ -20,22 +20,8 @@ public enum Gender {
         return id;
     }
 
-    /**
-     * Gets a Gender given it's id.
-     *
-     * @param id the Gender id.
-     * @return the Gender.
-     */
     @JsonCreator
-    public static Gender valueOf(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        for (Gender gender : values()) {
-            if (gender.id == id) {
-                return gender;
-            }
-        }
-        return null;
+    public static Gender forValue(int id) {
+        return EnumTypeUtils.getById(Gender.class, id);
     }
 }

@@ -26,7 +26,6 @@ import java.util.UUID;
 
 /**
  * Controller of the <code>User</code> entity.
- * @author thiago-ferreira
  */
 @RestController
 @RequestMapping("/api/v1")

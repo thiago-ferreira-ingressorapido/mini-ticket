@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 /**
  * Class responsible to handle the exceptions throw by controllers
- * @author thiago-ferreira
  */
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {

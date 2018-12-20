@@ -9,7 +9,6 @@ import java.util.UUID;
 
 /**
  * Interface with business rules of <code>User</code> entity.
- * @author thiago-ferreira
  */
 public interface UserService {
 

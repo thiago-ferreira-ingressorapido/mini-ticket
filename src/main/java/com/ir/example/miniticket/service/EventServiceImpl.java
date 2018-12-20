@@ -62,7 +62,7 @@ public class EventServiceImpl implements EventService {
         eventDao.saveEvent(newEvent);
 
         //Enriches the EventDate object
-        List<EventDate> eventDates = event.eventDates().orElse(Collections.emptyList())
+        List<EventDate> eventDates = event.eventDates()
             .stream().map((eventDate) -> {
                return ImmutableEventDate.copyOf(eventDate).
                    withId(this.generateId()).
@@ -83,11 +83,11 @@ public class EventServiceImpl implements EventService {
 
         //Merges the event, with the old and new values
         Event updatedEvent = ImmutableEvent.copyOf(currentEvent).
-            withEventAddress(eventDetails.eventAddress().orElse(currentEvent.eventAddress().orElse(null))).
-            withDescription(eventDetails.description().orElse(currentEvent.description().orElse(null))).
-            withName(eventDetails.name().orElse(currentEvent.name().orElse(null))).
-            withPrice(eventDetails.price().orElse(currentEvent.price().orElse(null))).
-            withQuantityTickets(eventDetails.quantityTickets().orElse(currentEvent.quantityTickets().orElse(null)));
+            withEventAddress(eventDetails.eventAddress().orElse(currentEvent.eventAddress().get())).
+            withDescription(eventDetails.description().orElse(currentEvent.description().get())).
+            withName(eventDetails.name().orElse(currentEvent.name().get())).
+            withPrice(eventDetails.price().orElse(currentEvent.price().get())).
+            withQuantityTickets(eventDetails.quantityTickets().orElse(currentEvent.quantityTickets().get()));
         //Saves the changes
         eventDao.updateEvent(updatedEvent);
 
@@ -102,6 +102,17 @@ public class EventServiceImpl implements EventService {
     @Override
     public void updateEventDate(EventDate eventDate) {
         eventDateDao.updateEventDate(eventDate);
+    }
+
+    /**
+     * Updates the quantity of the tickets available
+     *
+     * @param eventDateId
+     * @param quantity
+     */
+    @Override
+    public void updateEventDateAvailableTickets(UUID eventDateId, Integer quantity) {
+        eventDateDao.updateEventDateAvailableTickets(eventDateId,quantity);
     }
 
     @Override
