@@ -12,8 +12,9 @@ public class RedisConfiguration {
 
     @Bean
     public RedissonClient createRedisClient(){
+        AppProperties properties = AppPropertiesProvider.getInstance();
         Config config = new Config();
-        config.useSingleServer().setAddress("127.0.0.1:6379");
+        config.useSingleServer().setAddress(properties.redisAddress().getValue());
         return Redisson.create(config);
     }
 

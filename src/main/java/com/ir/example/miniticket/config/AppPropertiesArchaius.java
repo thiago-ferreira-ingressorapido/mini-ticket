@@ -31,4 +31,9 @@ public class AppPropertiesArchaius implements  AppProperties {
     public Property<String> jdbcConnectionTestQuery() {
         return  newStringProperty("jdbc.testQuery", "SELECT 1");
     }
+
+    @Override
+    public Property<String> redisAddress() {
+        return  newStringProperty("redis.address", "127.0.0.1:6379");
+    }
 }

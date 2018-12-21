@@ -32,4 +32,10 @@ public interface AppProperties {
      */
     Property<String> jdbcConnectionTestQuery();
 
+    /**
+     * Redis Address
+     * @return
+     */
+    Property<String> redisAddress();
+
 }
