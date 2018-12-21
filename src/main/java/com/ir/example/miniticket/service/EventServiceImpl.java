@@ -8,7 +8,6 @@ import com.ir.example.miniticket.model.ImmutableEvent;
 import com.ir.example.miniticket.model.ImmutableEventDate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -82,12 +81,46 @@ public class EventServiceImpl implements EventService {
     public Event updateEvent(Event currentEvent, Event eventDetails) {
 
         //Merges the event, with the old and new values
-        Event updatedEvent = ImmutableEvent.copyOf(currentEvent).
-            withEventAddress(eventDetails.eventAddress().orElse(currentEvent.eventAddress().get())).
-            withDescription(eventDetails.description().orElse(currentEvent.description().get())).
-            withName(eventDetails.name().orElse(currentEvent.name().get())).
-            withPrice(eventDetails.price().orElse(currentEvent.price().get())).
-            withQuantityTickets(eventDetails.quantityTickets().orElse(currentEvent.quantityTickets().get()));
+
+        ImmutableEvent.Builder builder = ImmutableEvent.builder();
+
+        if(eventDetails.description().isPresent()) {
+            builder.description(eventDetails.description());
+        } else {
+            builder.description(currentEvent.description());
+        }
+
+        if(eventDetails.eventAddress().isPresent()) {
+            builder.eventAddress(eventDetails.eventAddress());
+        } else {
+            builder.eventAddress(currentEvent.eventAddress());
+        }
+
+        if(eventDetails.name().isPresent()) {
+            builder.name(eventDetails.name());
+        } else {
+            builder.name(currentEvent.name());
+        }
+
+        if(eventDetails.price().isPresent()) {
+            builder.price(eventDetails.price());
+        } else {
+            builder.price(currentEvent.price());
+        }
+
+        if(eventDetails.quantityTickets().isPresent()) {
+            builder.quantityTickets(eventDetails.quantityTickets());
+        } else {
+            builder.quantityTickets(currentEvent.quantityTickets());
+        }
+
+        if(eventDetails.id().isPresent()) {
+            builder.id(eventDetails.id());
+        } else {
+            builder.id(currentEvent.id());
+        }
+
+        Event updatedEvent = builder.build();
         //Saves the changes
         eventDao.updateEvent(updatedEvent);
 
